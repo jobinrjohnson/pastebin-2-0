@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:pastebin/components/logo.dart';
 
 class SigninPage extends StatefulWidget {
   SigninPage({Key? key, this.title}) : super(key: key);
@@ -14,23 +15,20 @@ class _SigninPage extends State<SigninPage> {
   Widget buildForm(BuildContext context) {
     return Form(
         child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text("Username"),
-        TextFormField(),
+        TextFormField(decoration: InputDecoration(hintText: "Username")),
         SizedBox(height: 20),
-        Text("Password"),
         TextFormField(
-          obscureText: true,
-        ),
+            decoration: InputDecoration(hintText: "Username"),
+            obscureText: true),
         SizedBox(height: 20),
-        OutlinedButton(
-            onPressed: () {},
-            child: Container(
-              width: MediaQuery.of(context).size.width,
-              padding: EdgeInsets.all(20),
-              child: Text("Signin"),
-            ))
+        // TextButton(
+        //     onPressed: () {},
+        //     child: Padding(
+        //       child: Text("Sign In"),
+        //       padding: EdgeInsets.symmetric(vertical: 5),
+        //     ))
       ],
     ));
   }
@@ -38,26 +36,57 @@ class _SigninPage extends State<SigninPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        bottomNavigationBar: Container(
+            padding: EdgeInsets.all(40),
+            height: 190,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text("Don't Have and Account? "),
+                    SizedBox(width: 8),
+                    Text(
+                      "Sign up",
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyText1!
+                          .copyWith(fontSize: 18, fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 20),
+                TextButton(
+                    onPressed: () {},
+                    child: Padding(
+                      child: Text("Sign In"),
+                      padding: EdgeInsets.symmetric(vertical: 5),
+                    ))
+              ],
+            )),
         body: SingleChildScrollView(
-      padding: EdgeInsets.all(30),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          SizedBox(height: 60),
-          Text(
-            "Let's sign you in to Pastebin",
-            style: Theme.of(context).textTheme.headline2,
+          padding: EdgeInsets.all(40),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Logo(),
+              SizedBox(height: 40),
+              Text(
+                "Sign In ",
+                style: Theme.of(context).textTheme.headline2,
+              ),
+              SizedBox(height: 20),
+              Text(
+                "Welcome Back to Pastebin.",
+                style: Theme.of(context).textTheme.headline5,
+              ),
+              SizedBox(height: 60),
+              this.buildForm(context)
+            ],
           ),
-          SizedBox(height: 20),
-          Text(
-            "Welcome Back",
-            style: Theme.of(context).textTheme.headline5,
-          ),
-          SizedBox(height: 60),
-          this.buildForm(context)
-        ],
-      ),
-    ));
+        ));
   }
 }

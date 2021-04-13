@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pastebin/components/logo.dart';
 
 class MainAppBar extends StatefulWidget implements PreferredSizeWidget {
   @override
@@ -10,26 +11,7 @@ class MainAppBar extends StatefulWidget implements PreferredSizeWidget {
 
 class _MainAppBar extends State<MainAppBar> {
   Widget buildLeading() {
-    return Hero(
-        tag: "mainIcon_1",
-        child: Container(
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                gradient: LinearGradient(
-                  begin: Alignment.topRight,
-                  end: Alignment.bottomLeft,
-                  colors: [
-                    Theme.of(context).primaryColor,
-                    Theme.of(context).accentColor
-                  ],
-                )),
-            margin: EdgeInsets.symmetric(horizontal: 22, vertical: 20),
-            padding: EdgeInsets.all(8),
-            child: Text("pb",
-                style: Theme.of(context).textTheme.headline6!.copyWith(
-                    fontSize: 28,
-                    fontStyle: FontStyle.italic,
-                    color: Colors.white))));
+    return Hero(tag: "mainIcon_1", child: Logo(margin: EdgeInsets.all(22)));
   }
 
   @override

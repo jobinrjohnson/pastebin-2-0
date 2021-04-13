@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pastebin/pages/home_page.dart';
+import 'package:pastebin/pages/signin.dart';
 import 'package:pastebin/theme/light.dart';
 
 void main() {
@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: lightTheme,
-      home: MyHomePage(),
+      home: SigninPage(),
     );
   }
 }
