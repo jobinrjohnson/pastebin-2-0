@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pastebin/components/logo.dart';
+import 'package:pastebin/pages/user_view_page.dart';
 
 class MainAppBar extends StatefulWidget implements PreferredSizeWidget {
   @override
@@ -28,8 +29,10 @@ class _MainAppBar extends State<MainAppBar> {
           padding: EdgeInsets.all(20),
           tooltip: 'Show Snackbar',
           onPressed: () {
-            ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('This is a snackbar')));
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => UserViewPage()),
+            );
           },
         ),
       ],
