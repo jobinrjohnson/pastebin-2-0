@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pastebin/components/app_bar/main_appbar.dart';
 import 'package:pastebin/components/list_item/paste_1.dart';
 import 'package:pastebin/models/paste.dart';
+import 'package:pastebin/pages/add_paste_page.dart';
 import 'package:pastebin/services/pastebin.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -27,7 +28,10 @@ class _MyHomePageState extends State<MyHomePage> {
       body: this.buildListView(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          new PastebinService().getMyPastes();
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => AddPastePage()),
+          );
         },
         tooltip: 'Increment',
         child: Icon(Icons.add),

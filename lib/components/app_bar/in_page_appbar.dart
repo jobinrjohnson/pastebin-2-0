@@ -23,36 +23,20 @@ class _MainAppBar extends State<InPageAppBar> {
             )),
         margin: EdgeInsets.symmetric(horizontal: 22, vertical: 20),
         padding: EdgeInsets.all(8),
-        child: Icon(Icons.undo)
-
-        // Text("pb",
-        //     style: Theme.of(context).textTheme.headline6!.copyWith(
-        //         fontSize: 28,
-        //         fontStyle: FontStyle.italic,
-        //         color: Colors.white)
-
-        );
+        child: Icon(Icons.undo));
   }
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      leading: this.buildLeading(),
-      leadingWidth: 95,
-      backgroundColor: Colors.transparent,
-      toolbarHeight: widget.preferredSize.height,
-      actions: [
-        IconButton(
-          icon: const Icon(Icons.house),
-          iconSize: 30,
-          padding: EdgeInsets.all(20),
-          tooltip: 'Show Snackbar',
-          onPressed: () {
-            ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('This is a snackbar')));
+        leading: InkWell(
+          child: this.buildLeading(),
+          onTap: () {
+            Navigator.pop(context);
           },
         ),
-      ],
-    );
+        leadingWidth: 95,
+        backgroundColor: Colors.transparent,
+        toolbarHeight: widget.preferredSize.height);
   }
 }

@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 var lightTheme = ThemeData(
   // Define the default brightness and colors.
   brightness: Brightness.light,
+  // primaryColor: Colors.lightBlue[800],
+  // accentColor: Colors.cyan[600],
+
   primaryColor: Colors.lightBlue[800],
   accentColor: Colors.cyan[600],
 
@@ -29,8 +32,9 @@ var lightTheme = ThemeData(
               RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(20)))))),
 
-  backgroundColor: Colors.white,
-  scaffoldBackgroundColor: Color.fromRGBO(243, 243, 244, 1),
+  backgroundColor: Color.fromRGBO(243, 243, 244, 1),
+  // scaffoldBackgroundColor: Color.fromRGBO(243, 243, 244, 1),
+  scaffoldBackgroundColor: Colors.white,
 
   appBarTheme: AppBarTheme(
       backgroundColor: Color.fromRGBO(243, 243, 244, 1),
