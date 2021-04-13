@@ -23,12 +23,6 @@ class _SigninPage extends State<SigninPage> {
             decoration: InputDecoration(hintText: "Password"),
             obscureText: true),
         SizedBox(height: 20),
-        // TextButton(
-        //     onPressed: () {},
-        //     child: Padding(
-        //       child: Text("Sign In"),
-        //       padding: EdgeInsets.symmetric(vertical: 5),
-        //     ))
       ],
     ));
   }
@@ -36,13 +30,14 @@ class _SigninPage extends State<SigninPage> {
   buildBottomNavigBar() {
     return Container(
         padding: EdgeInsets.all(40),
-        height: 190,
+        height: 230,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text("Don't Have and Account? "),
                 SizedBox(width: 8),
@@ -76,7 +71,7 @@ class _SigninPage extends State<SigninPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Logo(),
+              Hero(tag: "mainIcon_1", child: Logo()),
               SizedBox(height: 60),
               Text(
                 "Sign In ",

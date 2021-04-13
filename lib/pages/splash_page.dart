@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pastebin/pages/home_page.dart';
+import 'package:pastebin/pages/onboarding_page.dart';
 
 class SplashPage extends StatefulWidget {
   @override
@@ -16,7 +16,7 @@ class _SplashPage extends State<SplashPage> {
             context,
             PageRouteBuilder(
                 transitionDuration: Duration(milliseconds: 700),
-                pageBuilder: (_, __, ___) => MyHomePage())
+                pageBuilder: (_, __, ___) => OnboradingPage())
             // MaterialPageRoute(builder: (context) => MyHomePage()),
             ));
   }
