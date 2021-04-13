@@ -23,8 +23,8 @@ class _PasteView extends State<PasteViewPage> {
           sliver: SliverAppBar(
             shape: ContinuousRectangleBorder(
                 borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(50),
-                    bottomRight: Radius.circular(50))),
+                    topRight: Radius.circular(100),
+                    bottomLeft: Radius.circular(100))),
             backgroundColor: Theme.of(context).accentColor,
             flexibleSpace: this.buildFlexibleSpace(context),
             floating: true,

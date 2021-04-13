@@ -38,7 +38,7 @@ class _SplashPage extends State<SplashPage> {
                       Theme.of(context).accentColor
                     ],
                   )),
-              margin: EdgeInsets.symmetric(horizontal: 22, vertical: 20),
+              margin: EdgeInsets.all(22),
               padding: EdgeInsets.all(26),
               child: Text("pb",
                   style: Theme.of(context).textTheme.headline6!.copyWith(
