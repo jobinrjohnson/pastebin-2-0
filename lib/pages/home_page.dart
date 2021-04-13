@@ -44,7 +44,11 @@ class _MyHomePageState extends State<MyHomePage> {
       future: new PastebinService().getMyPastes(),
       builder: (context, AsyncSnapshot<List<PastebinPaste>> snapshot) {
         if (snapshot.hasError) {
-          return Center(child: Text("Some error occurred"));
+          return Center(
+              child: Text(
+            snapshot.error.toString(),
+            textAlign: TextAlign.center,
+          ));
         }
 
         if (!snapshot.hasData) {

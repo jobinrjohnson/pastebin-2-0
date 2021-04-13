@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:pastebin/services/pastebin.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserProvider with ChangeNotifier {
   late SharedPreferences prefs;
 
   String? authString;
+
+  void notifyListeners() {
+    PastebinService.authString = this.authString;
+    super.notifyListeners();
+  }
 
   get isLoggedIn {
     return authString != null && authString!.length > 1;

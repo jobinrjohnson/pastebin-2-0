@@ -4,6 +4,7 @@ import 'package:xml/xml.dart';
 
 class PastebinService {
   get apiKey => "54264ef0696e0c17fd50c62d5685e1a8";
+  static String? authString;
 
   Uri getUrl({trailing}) {
     String url = "https://pastebin.com/api";
@@ -52,86 +53,28 @@ class PastebinService {
   Future<List<PastebinPaste>> getMyPastes() async {
     List<PastebinPaste> pastes = [];
 
-    final bookshelfXml = '''<?xml version="1.0"?>
-    <data>
-      <paste>
-        <paste_key>SBrUr0xd</paste_key>
-        <paste_date>1297953260</paste_date>
-        <paste_title>Abstract Noun</paste_title>
-        <paste_size>15</paste_size>
-        <paste_expire_date>1297956860</paste_expire_date>
-        <paste_private>0</paste_private>
-        <paste_format_long>JavaScript</paste_format_long>
-        <paste_format_short>javascript</paste_format_short>
-        <paste_url>https://pastebin.com/0b42rwhf</paste_url>
-        <paste_hits>15</paste_hits>
-      </paste>
-      <paste>
-        <paste_key>0b42rwhf</paste_key>
-        <paste_date>1297953260</paste_date>
-        <paste_title>Video Interval Calculator v1.1</paste_title>
-        <paste_size>15</paste_size>
-        <paste_expire_date>1297956860</paste_expire_date>
-        <paste_private>0</paste_private>
-        <paste_format_long>JavaScript</paste_format_long>
-        <paste_format_short>javascript</paste_format_short>
-        <paste_url>https://pastebin.com/0b42rwhf</paste_url>
-        <paste_hits>15</paste_hits>
-      </paste>
-      <paste>
-        <paste_key>0b42rwhf</paste_key>
-        <paste_date>1297953260</paste_date>
-        <paste_title>Github-IPTV-Parser.bat</paste_title>
-        <paste_size>15</paste_size>
-        <paste_expire_date>1297956860</paste_expire_date>
-        <paste_private>0</paste_private>
-        <paste_format_long>JavaScript</paste_format_long>
-        <paste_format_short>javascript</paste_format_short>
-        <paste_url>https://pastebin.com/0b42rwhf</paste_url>
-        <paste_hits>15</paste_hits>
-      </paste>
-      <paste>
-        <paste_key>0b42rwhf</paste_key>
-        <paste_date>1297953260</paste_date>
-        <paste_title>Tk_2D_Perlin_Noise_Plus.py</paste_title>
-        <paste_size>15</paste_size>
-        <paste_expire_date>1297956860</paste_expire_date>
-        <paste_private>0</paste_private>
-        <paste_format_long>JavaScript</paste_format_long>
-        <paste_format_short>javascript</paste_format_short>
-        <paste_url>https://pastebin.com/0b42rwhf</paste_url>
-        <paste_hits>15</paste_hits>
-      </paste>
-      <paste>
-        <paste_key>0b42rwhf</paste_key>
-        <paste_date>1297953260</paste_date>
-        <paste_title>javascript test</paste_title>
-        <paste_size>15</paste_size>
-        <paste_expire_date>1297956860</paste_expire_date>
-        <paste_private>0</paste_private>
-        <paste_format_long>JavaScript</paste_format_long>
-        <paste_format_short>javascript</paste_format_short>
-        <paste_url>https://pastebin.com/0b42rwhf</paste_url>
-        <paste_hits>15</paste_hits>
-      </paste>
-      <paste>
-        <paste_key>0C343n0d</paste_key>
-        <paste_date>1297694343</paste_date>
-        <paste_title>Welcome To Pastebin V3</paste_title>
-        <paste_size>490</paste_size>
-        <paste_expire_date>0</paste_expire_date>
-        <paste_private>0</paste_private>
-        <paste_format_long>None</paste_format_long>
-        <paste_format_short>text</paste_format_short>
-        <paste_url>https://pastebin.com/0C343n0d</paste_url>
-        <paste_hits>65</paste_hits>
-      </paste>
-    </data>''';
+    var response =
+        await http.post(this.getUrl(trailing: '/api_post.php'), body: {
+      'api_dev_key': this.apiKey,
+      'api_option': 'list',
+      'api_user_key': authString.toString()
+    });
+
+    if (response.statusCode != 200) {
+      throw (response.body);
+    }
+
+    final bookshelfXml = '<?xml version="1.0"?><data>${response.body}</data>';
     final document = XmlDocument.parse(bookshelfXml);
 
     document.findAllElements('paste').forEach((element) {
+      String pasteKey = getAttr(element, 'paste_key');
+      // ignore: unnecessary_null_comparison
+      if (pasteKey == null) {
+        return;
+      }
       PastebinPaste p = new PastebinPaste(
-        key: getAttr(element, 'paste_key'),
+        key: pasteKey,
         size: getAttr(element, 'paste_size'),
         format: getAttr(element, 'paste_format_short'),
         hits: int.tryParse(getAttr(element, 'paste_hits')) ?? 0,
@@ -139,7 +82,7 @@ class PastebinService {
         isPrivate: getAttr(element, 'paste_private') == 1 ? true : false,
         pasteDate: getAttr(element, 'paste_date'),
         pasteExpiryDate: getAttr(element, 'paste_expire_date'),
-        title: getAttr(element, 'paste_title'),
+        title: getAttr(element, 'paste_title') ?? 'Untitled',
       );
       pastes.add(p);
     });
