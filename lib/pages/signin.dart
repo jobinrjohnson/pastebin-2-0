@@ -1,6 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pastebin/components/logo.dart';
+import 'package:pastebin/pages/home_page.dart';
+import 'package:pastebin/provider/userprovider.dart';
+import 'package:pastebin/services/pastebin.dart';
+import 'package:provider/provider.dart';
 
 class SigninPage extends StatefulWidget {
   SigninPage({Key? key, this.title}) : super(key: key);
@@ -12,19 +16,53 @@ class SigninPage extends StatefulWidget {
 }
 
 class _SigninPage extends State<SigninPage> {
+  String? error;
+
+  TextEditingController _userNameController = new TextEditingController();
+  TextEditingController _passwordController = new TextEditingController();
+
   Widget buildForm(BuildContext context) {
     return Form(
         child: Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        TextFormField(decoration: InputDecoration(hintText: "Username")),
+        TextFormField(
+          decoration: InputDecoration(hintText: "Username"),
+          controller: _userNameController,
+        ),
         SizedBox(height: 20),
         TextFormField(
+            controller: _passwordController,
             decoration: InputDecoration(hintText: "Password"),
             obscureText: true),
         SizedBox(height: 20),
+        if (error != null)
+          Text(error!,
+              style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold))
       ],
     ));
+  }
+
+  _tryLogin() async {
+    setState(() {
+      error = null;
+    });
+
+    // await Provider.of<UserProvider>(context, listen: false).login("071ca1869fb91412cc0e5fc10cfac2d4");
+    new PastebinService()
+        .login(_userNameController.text, _passwordController.text)
+        .then((value) async {
+      await Provider.of<UserProvider>(context, listen: false).login(value);
+
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => MyHomePage()),
+      );
+    }).onError((error, stackTrace) {
+      setState(() {
+        this.error = error.toString();
+      });
+    });
   }
 
   buildBottomNavigBar() {
@@ -52,7 +90,7 @@ class _SigninPage extends State<SigninPage> {
             ),
             SizedBox(height: 20),
             TextButton(
-                onPressed: () {},
+                onPressed: _tryLogin,
                 child: Padding(
                   child: Text("Sign In"),
                   padding: EdgeInsets.symmetric(vertical: 5),

@@ -5,31 +5,32 @@ import 'package:xml/xml.dart';
 class PastebinService {
   get apiKey => "54264ef0696e0c17fd50c62d5685e1a8";
 
-  String getUrl({trailing}) {
+  Uri getUrl({trailing}) {
     String url = "https://pastebin.com/api";
 
     if (trailing != null) {
       url += trailing;
     }
-    return url;
+    return Uri.parse(url);
   }
 
-  login(userName, password) async {
-    var request = http.MultipartRequest(
-        'POST', Uri.parse(this.getUrl(trailing: '/api_login.php')));
-    request.fields.addAll({
+  Future<String> login(userName, password) async {
+    var response =
+        await http.post(this.getUrl(trailing: '/api_login.php'), body: {
       'api_dev_key': this.apiKey,
       'api_user_name': userName,
       'api_user_password': password
     });
 
-    http.StreamedResponse response = await request.send();
-
     if (response.statusCode == 200) {
-      print(await response.stream.bytesToString());
-    } else {
-      print(response.reasonPhrase);
+      return response.body;
     }
+
+    if (response.statusCode == 401) {
+      throw (response.body);
+    }
+
+    throw ("Some error occurred");
   }
 
   getRawPost(String postId) async {

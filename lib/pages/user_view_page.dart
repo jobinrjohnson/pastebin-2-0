@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:pastebin/components/app_bar/in_page_appbar.dart';
 import 'package:pastebin/pages/about_page.dart';
 import 'package:pastebin/pages/privacy_policy_page.dart';
+import 'package:pastebin/pages/splash_page.dart';
+import 'package:pastebin/provider/userprovider.dart';
+import 'package:provider/provider.dart';
 
 import 'add_paste_page.dart';
 
@@ -13,15 +16,18 @@ class UserViewPage extends StatefulWidget {
 class _UserViewPage extends State<UserViewPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: InPageAppBar(),
-      body: SingleChildScrollView(
-        child: buildBody(context),
-      ),
-    );
+    return Consumer<UserProvider>(
+        builder: (context, UserProvider provider, child) {
+      return Scaffold(
+        appBar: InPageAppBar(),
+        body: SingleChildScrollView(
+          child: buildBody(context, provider),
+        ),
+      );
+    });
   }
 
-  buildBody(BuildContext context) {
+  buildBody(BuildContext context, UserProvider provider) {
     return Container(
         padding: EdgeInsets.all(30),
         child: Column(
@@ -106,25 +112,35 @@ class _UserViewPage extends State<UserViewPage> {
                         ))),
                 SizedBox(width: 20),
                 Expanded(
-                    child: Material(
-                  elevation: 3,
-                  color: Theme.of(context).backgroundColor,
-                  borderRadius: BorderRadius.circular(20),
-                  child: Container(
-                    padding: EdgeInsets.all(20),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text("Logout",
-                            style: Theme.of(context).textTheme.headline6),
-                        SizedBox(height: 10),
-                        Text("Log out from this application",
-                            style: Theme.of(context).textTheme.caption),
-                      ],
-                    ),
-                  ),
-                )),
+                    child: InkWell(
+                        onTap: () {
+                          provider.logOut();
+                          Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => SplashPage()),
+                              (Route<dynamic> route) => false);
+                        },
+                        child: Material(
+                          elevation: 3,
+                          color: Theme.of(context).backgroundColor,
+                          borderRadius: BorderRadius.circular(20),
+                          child: Container(
+                            padding: EdgeInsets.all(20),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text("Logout",
+                                    style:
+                                        Theme.of(context).textTheme.headline6),
+                                SizedBox(height: 10),
+                                Text("Log out from this application",
+                                    style: Theme.of(context).textTheme.caption),
+                              ],
+                            ),
+                          ),
+                        ))),
               ],
             ),
 

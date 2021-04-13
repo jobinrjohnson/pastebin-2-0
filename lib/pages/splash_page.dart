@@ -14,8 +14,11 @@ class _SplashPage extends State<SplashPage> {
   void initState() {
     super.initState();
 
-    Future.microtask(() {
-      bool isIn = context.read<UserProvider>().isLoggedIn;
+    Future.microtask(() async {
+      var provider = context.read<UserProvider>();
+      await provider.init();
+
+      bool isIn = provider.isLoggedIn;
 
       new Future.delayed(const Duration(seconds: 3), () {
         Navigator.push(
