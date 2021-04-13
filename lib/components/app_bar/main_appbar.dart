@@ -24,10 +24,10 @@ class _MainAppBar extends State<MainAppBar> {
       toolbarHeight: widget.preferredSize.height,
       actions: [
         IconButton(
-          icon: const Icon(Icons.house),
+          icon: const Icon(Icons.person_outline_outlined),
           iconSize: 30,
           padding: EdgeInsets.all(20),
-          tooltip: 'Show Snackbar',
+          tooltip: 'Show Profile',
           onPressed: () {
             Navigator.push(
               context,

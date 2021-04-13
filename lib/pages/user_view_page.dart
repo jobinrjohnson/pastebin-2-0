@@ -3,6 +3,8 @@ import 'package:pastebin/components/app_bar/in_page_appbar.dart';
 import 'package:pastebin/pages/about_page.dart';
 import 'package:pastebin/pages/privacy_policy_page.dart';
 
+import 'add_paste_page.dart';
+
 class UserViewPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _UserViewPage();
@@ -70,30 +72,38 @@ class _UserViewPage extends State<UserViewPage> {
             Row(
               children: [
                 Expanded(
-                    child: Material(
-                  elevation: 3,
-                  color: Theme.of(context).primaryColor,
-                  borderRadius: BorderRadius.circular(20),
-                  child: Container(
-                    padding: EdgeInsets.all(20),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        Text("Add Paste",
-                            style: Theme.of(context)
-                                .textTheme
-                                .headline6!
-                                .copyWith(color: Colors.white)),
-                        SizedBox(height: 10),
-                        Text("Create new paste on pastebin.",
-                            style: Theme.of(context)
-                                .textTheme
-                                .caption!
-                                .copyWith(color: Colors.white70)),
-                      ],
-                    ),
-                  ),
-                )),
+                    child: InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => AddPastePage()),
+                          );
+                        },
+                        child: Material(
+                          elevation: 3,
+                          color: Theme.of(context).primaryColor,
+                          borderRadius: BorderRadius.circular(20),
+                          child: Container(
+                            padding: EdgeInsets.all(20),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                Text("Add Paste",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headline6!
+                                        .copyWith(color: Colors.white)),
+                                SizedBox(height: 10),
+                                Text("Create new paste on pastebin.",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .caption!
+                                        .copyWith(color: Colors.white70)),
+                              ],
+                            ),
+                          ),
+                        ))),
                 SizedBox(width: 20),
                 Expanded(
                     child: Material(

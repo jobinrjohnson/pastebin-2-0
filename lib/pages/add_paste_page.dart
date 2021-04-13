@@ -11,7 +11,8 @@ class AddPastePage extends StatefulWidget {
 class _AddPastePage extends State<AddPastePage> {
   buildBottomNavigBar() {
     return Container(
-        padding: EdgeInsets.all(40),
+        color: Colors.transparent,
+        padding: EdgeInsets.only(bottom: 30, left: 40, right: 40, top: 2),
         child: TextButton(
             onPressed: () {},
             child: Padding(

@@ -52,9 +52,13 @@ class _MyHomePageState extends State<MyHomePage> {
         }
 
         return ListView.builder(
-          itemCount: (snapshot.data?.length ?? 0) + 1,
+          itemCount: (snapshot.data?.length ?? 0) + 2,
           padding: EdgeInsets.symmetric(horizontal: 15),
           itemBuilder: (context, index) {
+            if (index == (snapshot.data?.length ?? 0) + 1) {
+              return SizedBox(height: 80);
+            }
+
             if (index == 0) {
               return Container(
                   padding: EdgeInsets.symmetric(vertical: 40, horizontal: 20),
