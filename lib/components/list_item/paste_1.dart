@@ -35,7 +35,7 @@ class PasteStyle1 extends StatelessWidget {
             children: [
               SizedBox(height: 20),
               Text('${paste.hits} Views, ${paste.format}'),
-              SizedBox(height: 8),
+              SizedBox(height: 2),
               Text('${paste.date} - ${paste.date}')
             ],
           ),

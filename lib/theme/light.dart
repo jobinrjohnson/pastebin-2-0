@@ -50,6 +50,7 @@ var lightTheme = ThemeData(
   textTheme: TextTheme(
       headline1: TextStyle(fontWeight: FontWeight.bold),
       headline6: TextStyle(fontWeight: FontWeight.bold, color: Colors.black54),
-      bodyText2: TextStyle(fontSize: 14.0),
+      bodyText2: TextStyle(fontSize: 14.0, height: 1.4),
+      bodyText1: TextStyle(fontSize: 14.0, height: 2),
       button: TextStyle(fontSize: 16)),
 );

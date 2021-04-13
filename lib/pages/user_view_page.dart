@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pastebin/components/app_bar/in_page_appbar.dart';
+import 'package:pastebin/pages/about_page.dart';
+import 'package:pastebin/pages/privacy_policy_page.dart';
 
 class UserViewPage extends StatefulWidget {
   @override
@@ -11,7 +13,9 @@ class _UserViewPage extends State<UserViewPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: InPageAppBar(),
-      body: buildBody(context),
+      body: SingleChildScrollView(
+        child: buildBody(context),
+      ),
     );
   }
 
@@ -113,6 +117,36 @@ class _UserViewPage extends State<UserViewPage> {
                 )),
               ],
             ),
+
+            // Our apps
+
+            SizedBox(height: 40),
+
+            ListTile(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => AboutPage()),
+                );
+              },
+              title: Text("About the App"),
+              subtitle: Text("See about the application."),
+              trailing: Icon(Icons.arrow_forward_ios_outlined),
+            ),
+
+            SizedBox(height: 5),
+
+            ListTile(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => PrivacyPolicyPage()),
+                );
+              },
+              title: Text("Privacy Policy"),
+              subtitle: Text("See Privacy policy of the application."),
+              trailing: Icon(Icons.arrow_forward_ios_outlined),
+            )
           ],
         ));
   }
