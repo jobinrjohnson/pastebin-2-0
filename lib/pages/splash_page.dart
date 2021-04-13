@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:pastebin/pages/home_page.dart';
 import 'package:pastebin/pages/onboarding_page.dart';
+import 'package:pastebin/provider/userprovider.dart';
+import 'package:provider/provider.dart';
 
 class SplashPage extends StatefulWidget {
   @override
@@ -10,15 +13,19 @@ class _SplashPage extends State<SplashPage> {
   @override
   void initState() {
     super.initState();
-    new Future.delayed(
-        const Duration(seconds: 3),
-        () => Navigator.push(
+
+    Future.microtask(() {
+      bool isIn = context.read<UserProvider>().isLoggedIn;
+
+      new Future.delayed(const Duration(seconds: 3), () {
+        Navigator.push(
             context,
             PageRouteBuilder(
                 transitionDuration: Duration(milliseconds: 700),
-                pageBuilder: (_, __, ___) => OnboradingPage())
-            // MaterialPageRoute(builder: (context) => MyHomePage()),
-            ));
+                pageBuilder: (_, __, ___) =>
+                    isIn ? MyHomePage() : OnboradingPage()));
+      });
+    });
   }
 
   @override
