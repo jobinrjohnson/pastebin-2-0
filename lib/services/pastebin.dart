@@ -1,5 +1,6 @@
 import 'package:http/http.dart' as http;
 import 'package:pastebin/models/paste.dart';
+import 'package:pastebin/models/user.dart';
 import 'package:xml/xml.dart';
 
 class PastebinService {
@@ -88,5 +89,31 @@ class PastebinService {
     });
 
     return pastes;
+  }
+
+  Future<User> getUser(String authString) async {
+    var response =
+        await http.post(this.getUrl(trailing: '/api_post.php'), body: {
+      'api_dev_key': this.apiKey,
+      'api_option': 'userdetails',
+      'api_user_key': authString
+    });
+
+    if (response.statusCode != 200) {
+      throw (response.body);
+    }
+
+    final bookshelfXml = '<?xml version="1.0"?>${response.body}';
+    final document = XmlDocument.parse(bookshelfXml);
+
+    var element = document.findAllElements('user').first;
+    User p = new User(
+      avatarUrl: getAttr(element, 'user_avatar_url'),
+      email: getAttr(element, 'user_email'),
+      name: getAttr(element, 'user_name'),
+      website: getAttr(element, 'user_website'),
+    );
+
+    return p;
   }
 }

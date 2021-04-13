@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:pastebin/components/app_bar/main_appbar.dart';
 import 'package:pastebin/components/list_item/paste_1.dart';
 import 'package:pastebin/models/paste.dart';
+import 'package:pastebin/models/user.dart';
 import 'package:pastebin/pages/add_paste_page.dart';
+import 'package:pastebin/provider/userprovider.dart';
 import 'package:pastebin/services/pastebin.dart';
+import 'package:provider/provider.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key? key, this.title}) : super(key: key);
@@ -64,23 +67,28 @@ class _MyHomePageState extends State<MyHomePage> {
             }
 
             if (index == 0) {
-              return Container(
-                  padding: EdgeInsets.symmetric(vertical: 40, horizontal: 20),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Text("Welcome",
-                          style: Theme.of(context).textTheme.headline4),
-                      SizedBox(height: 20),
-                      Text(
-                        "Jobin Johnson",
-                        style: Theme.of(context)
-                            .textTheme
-                            .headline4!
-                            .copyWith(color: Colors.black),
-                      )
-                    ],
-                  ));
+              return Consumer<UserProvider>(
+                  builder: (context, UserProvider provider, child) {
+                User? user = provider.user;
+
+                return Container(
+                    padding: EdgeInsets.symmetric(vertical: 40, horizontal: 20),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Text("Welcome",
+                            style: Theme.of(context).textTheme.headline4),
+                        SizedBox(height: 20),
+                        Text(
+                          '${user?.name ?? 'user'}',
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline4!
+                              .copyWith(color: Colors.black),
+                        )
+                      ],
+                    ));
+              });
             }
 
             PastebinPaste paste = snapshot.data![index - 1];

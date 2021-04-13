@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pastebin/components/app_bar/in_page_appbar.dart';
+import 'package:pastebin/models/user.dart';
 import 'package:pastebin/pages/about_page.dart';
 import 'package:pastebin/pages/privacy_policy_page.dart';
 import 'package:pastebin/pages/splash_page.dart';
@@ -16,18 +17,19 @@ class UserViewPage extends StatefulWidget {
 class _UserViewPage extends State<UserViewPage> {
   @override
   Widget build(BuildContext context) {
-    return Consumer<UserProvider>(
-        builder: (context, UserProvider provider, child) {
-      return Scaffold(
-        appBar: InPageAppBar(),
-        body: SingleChildScrollView(
-          child: buildBody(context, provider),
-        ),
-      );
-    });
+    return Scaffold(
+      appBar: InPageAppBar(),
+      body: SingleChildScrollView(
+        child: Consumer<UserProvider>(
+            builder: (context, UserProvider provider, child) {
+          return buildBody(context, provider);
+        }),
+      ),
+    );
   }
 
   buildBody(BuildContext context, UserProvider provider) {
+    User? user = provider.user;
     return Container(
         padding: EdgeInsets.all(30),
         child: Column(
@@ -36,12 +38,15 @@ class _UserViewPage extends State<UserViewPage> {
             Text("Hey,", style: Theme.of(context).textTheme.headline4),
             SizedBox(height: 20),
             Text(
-              "Jobin Johnson",
+              '${user?.name} ',
               style: Theme.of(context)
                   .textTheme
                   .headline4!
                   .copyWith(color: Colors.black),
             ),
+            SizedBox(height: 3),
+            Text('${user?.email ?? ' '} ${user?.website ?? ' '}',
+                style: Theme.of(context).textTheme.bodyText1),
             SizedBox(height: 40),
 
             // Account box
@@ -119,7 +124,7 @@ class _UserViewPage extends State<UserViewPage> {
                               context,
                               MaterialPageRoute(
                                   builder: (context) => SplashPage()),
-                              (Route<dynamic> route) => false);
+                                  (Route<dynamic> route) => false);
                         },
                         child: Material(
                           elevation: 3,
@@ -133,7 +138,7 @@ class _UserViewPage extends State<UserViewPage> {
                               children: [
                                 Text("Logout",
                                     style:
-                                        Theme.of(context).textTheme.headline6),
+                                    Theme.of(context).textTheme.headline6),
                                 SizedBox(height: 10),
                                 Text("Log out from this application",
                                     style: Theme.of(context).textTheme.caption),

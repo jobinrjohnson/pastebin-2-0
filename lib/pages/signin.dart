@@ -48,7 +48,8 @@ class _SigninPage extends State<SigninPage> {
       error = null;
     });
 
-    // await Provider.of<UserProvider>(context, listen: false).login("071ca1869fb91412cc0e5fc10cfac2d4");
+    await Provider.of<UserProvider>(context, listen: false)
+        .login("071ca1869fb91412cc0e5fc10cfac2d4");
     new PastebinService()
         .login(_userNameController.text, _passwordController.text)
         .then((value) async {
