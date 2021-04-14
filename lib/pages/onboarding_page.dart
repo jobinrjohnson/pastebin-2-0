@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pastebin/pages/signin.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class OnboradingPage extends StatefulWidget {
   @override
@@ -20,7 +21,12 @@ class _OnboradingPage extends State<OnboradingPage> {
                     style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all<Color>(
                             Theme.of(context).primaryColor)),
-                    onPressed: () {},
+                    onPressed: () async {
+                      var _url = "https://pastebin.com/signup";
+                      await canLaunch(_url)
+                          ? await launch(_url)
+                          : throw 'Could not launch $_url';
+                    },
                     child: Padding(
                       child: Text("Register"),
                       padding: EdgeInsets.symmetric(vertical: 5),

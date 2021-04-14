@@ -5,6 +5,7 @@ import 'package:pastebin/pages/home_page.dart';
 import 'package:pastebin/provider/userprovider.dart';
 import 'package:pastebin/services/pastebin.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SigninPage extends StatefulWidget {
   SigninPage({Key? key, this.title}) : super(key: key);
@@ -17,35 +18,55 @@ class SigninPage extends StatefulWidget {
 
 class _SigninPage extends State<SigninPage> {
   String? error;
+  bool isLoading = false;
 
   TextEditingController _userNameController = new TextEditingController();
   TextEditingController _passwordController = new TextEditingController();
 
+  final _formKey = GlobalKey<FormState>();
+
   Widget buildForm(BuildContext context) {
     return Form(
+        key: _formKey,
         child: Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        TextFormField(
-          decoration: InputDecoration(hintText: "Username"),
-          controller: _userNameController,
-        ),
-        SizedBox(height: 20),
-        TextFormField(
-            controller: _passwordController,
-            decoration: InputDecoration(hintText: "Password"),
-            obscureText: true),
-        SizedBox(height: 20),
-        if (error != null)
-          Text(error!,
-              style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold))
-      ],
-    ));
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            TextFormField(
+              decoration: InputDecoration(hintText: "Username"),
+              controller: _userNameController,
+              validator: (value) {
+                if ((value?.length ?? 0) < 2) {
+                  return "Enter a valid username.";
+                }
+              },
+            ),
+            SizedBox(height: 20),
+            TextFormField(
+                controller: _passwordController,
+                decoration: InputDecoration(hintText: "Password"),
+                validator: (value) {
+                  if ((value?.length ?? 0) < 2) {
+                    return "Enter a valid username.";
+                  }
+                },
+                obscureText: true),
+            SizedBox(height: 20),
+            if (error != null)
+              Text(error!,
+                  style:
+                      TextStyle(color: Colors.red, fontWeight: FontWeight.bold))
+          ],
+        ));
   }
 
   _tryLogin() async {
+    if (!_formKey.currentState!.validate() || isLoading) {
+      return;
+    }
+
     setState(() {
       error = null;
+      isLoading = true;
     });
 
     await Provider.of<UserProvider>(context, listen: false)
@@ -62,6 +83,10 @@ class _SigninPage extends State<SigninPage> {
     }).onError((error, stackTrace) {
       setState(() {
         this.error = error.toString();
+      });
+    }).whenComplete(() {
+      setState(() {
+        isLoading = false;
       });
     });
   }
@@ -80,13 +105,18 @@ class _SigninPage extends State<SigninPage> {
               children: [
                 Text("Don't Have and Account? "),
                 SizedBox(width: 8),
-                Text(
-                  "Sign up",
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyText1!
-                      .copyWith(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
+                GestureDetector(
+                    onTap: () async {
+                      var _url = "https://pastebin.com/signup";
+                      await canLaunch(_url)
+                          ? await launch(_url)
+                          : throw 'Could not launch $_url';
+                    },
+                    child: Text(
+                      "Sign up",
+                      style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                          fontSize: 18, fontWeight: FontWeight.bold, height: 1),
+                    )),
               ],
             ),
             SizedBox(height: 20),
