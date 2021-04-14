@@ -3,7 +3,12 @@
 
     <application
         android:icon="@mipmap/ic_launcher"
-        android:label="pastebin">
+        android:label="Pastebin">
+
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-6479565236772083~7629747050" />
+
         <activity
             android:name=".MainActivity"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"

@@ -69,6 +69,15 @@ class _SigninPage extends State<SigninPage> {
       isLoading = true;
     });
 
+    // // Start of bypass
+    // await Provider.of<UserProvider>(context, listen: false).login("8e868223e62edf37151f46bc6291936c");
+    // Navigator.pushAndRemoveUntil(
+    //     context,
+    //     MaterialPageRoute(builder: (context) => MyHomePage()),
+    //         (Route<dynamic> route) => false);
+    // return;
+    // // End of bypass
+
     new PastebinService()
         .login(_userNameController.text, _passwordController.text)
         .then((value) async {

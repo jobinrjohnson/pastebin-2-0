@@ -34,8 +34,8 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId "into.jobinrjohnson.pastebin"
-        minSdkVersion 16
+        applicationId "in.jobinrjohnson.pastebin"
+        minSdkVersion 19
         targetSdkVersion 30
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
@@ -48,6 +48,13 @@ android {
             signingConfig signingConfigs.debug
         }
     }
+//    flavorDimensions "version"
+//    productFlavors {
+//        flavor1 {
+//            dimension "version"
+//            applicationId 'in.jobinrjohnson.pastebin'
+//        }
+//    }
 }
 
 flutter {

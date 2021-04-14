@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:pastebin/pages/splash_page.dart';
 import 'package:pastebin/provider/paste_provider.dart';
 import 'package:pastebin/provider/theme_provider.dart';
@@ -6,6 +7,11 @@ import 'package:pastebin/provider/userprovider.dart';
 import 'package:provider/provider.dart';
 
 void main() {
+  // Google Ads
+  WidgetsFlutterBinding.ensureInitialized();
+  MobileAds.instance.initialize();
+  // End of Google Ads
+
   runApp(MyApp());
 }
 
@@ -20,6 +26,7 @@ class MyApp extends StatelessWidget {
       ],
       child: Consumer<ThemeProvider>(
         builder: (context, ThemeProvider provider, child) => MaterialApp(
+          debugShowCheckedModeBanner: false,
           title: 'Flutter Demo',
           theme: provider.theme,
           home: SplashPage(),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:pastebin/components/app_bar/main_appbar.dart';
 import 'package:pastebin/components/list_item/paste_1.dart';
 import 'package:pastebin/models/paste.dart';
@@ -68,6 +69,26 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  getBannerAd() {
+    final AdSize adSize = AdSize(width: 320, height: 100);
+    final BannerAd myBanner = BannerAd(
+      adUnitId: 'ca-app-pub-6479565236772083/4482831378',
+      size: adSize,
+      request: AdRequest(),
+      listener: AdListener(),
+    );
+    myBanner.load();
+    final AdWidget adWidget = AdWidget(ad: myBanner);
+    final Container adContainer = Container(
+      alignment: Alignment.center,
+      child: adWidget,
+      width: myBanner.size.width.toDouble(),
+      height: myBanner.size.height.toDouble(),
+    );
+
+    return adContainer;
+  }
+
   Widget buildListView(snapshot) {
     return SliverList(
       delegate: SliverChildBuilderDelegate(
@@ -77,11 +98,20 @@ class _MyHomePageState extends State<MyHomePage> {
           }
 
           PastebinPaste paste = snapshot.data![index];
-          return Container(
+          var pasteItem = Container(
               margin: EdgeInsets.symmetric(vertical: 10, horizontal: 30),
               child: PasteStyle1(
                 paste: paste,
               ));
+
+          if (index % 3 == 1) {
+            return Column(children: [
+              getBannerAd(),
+              pasteItem,
+            ]);
+          }
+
+          return pasteItem;
         },
         childCount: snapshot.data.length + 1,
       ),
