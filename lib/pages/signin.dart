@@ -69,17 +69,23 @@ class _SigninPage extends State<SigninPage> {
       isLoading = true;
     });
 
-    // await Provider.of<UserProvider>(context, listen: false)
-    //     .login("071ca1869fb91412cc0e5fc10cfac2d4");
+    await Provider.of<UserProvider>(context, listen: false)
+        .login("071ca1869fb91412cc0e5fc10cfac2d4");
+    Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => MyHomePage()),
+        (Route<dynamic> route) => false);
+    return;
+
     new PastebinService()
         .login(_userNameController.text, _passwordController.text)
         .then((value) async {
       await Provider.of<UserProvider>(context, listen: false).login(value);
 
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => MyHomePage()),
-      );
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => MyHomePage()),
+          (Route<dynamic> route) => false);
     }).onError((error, stackTrace) {
       setState(() {
         this.error = error.toString();

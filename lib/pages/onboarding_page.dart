@@ -27,10 +27,7 @@ class _OnboradingPage extends State<OnboradingPage> {
                           ? await launch(_url)
                           : throw 'Could not launch $_url';
                     },
-                    child: Padding(
-                      child: Text("Register"),
-                      padding: EdgeInsets.symmetric(vertical: 5),
-                    ))),
+                    child: Text("Register"))),
             Expanded(
                 child: TextButton(
                     onPressed: () {
@@ -39,10 +36,7 @@ class _OnboradingPage extends State<OnboradingPage> {
                         MaterialPageRoute(builder: (context) => SigninPage()),
                       );
                     },
-                    child: Padding(
-                      child: Text("Sign In"),
-                      padding: EdgeInsets.symmetric(vertical: 5),
-                    ))),
+                    child: Text("Sign In"))),
           ],
         ));
   }

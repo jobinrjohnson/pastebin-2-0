@@ -11,6 +11,7 @@ var lightTheme = ThemeData(
 
   inputDecorationTheme: InputDecorationTheme(
     contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 25),
+    hintStyle: TextStyle(fontFamily: 'OpenSans'),
     border: OutlineInputBorder(
         borderSide: BorderSide(color: Colors.black87, width: 2.0),
         borderRadius: BorderRadius.circular(15)),
@@ -48,9 +49,15 @@ var lightTheme = ThemeData(
   // Define the default TextTheme. Use this to specify the default
   // text styling for headlines, titles, bodies of text, and more.
   textTheme: TextTheme(
-      headline1: TextStyle(fontWeight: FontWeight.bold),
-      headline6: TextStyle(fontWeight: FontWeight.bold, color: Colors.black54),
-      bodyText2: TextStyle(fontSize: 14.0, height: 1.4),
-      bodyText1: TextStyle(fontSize: 14.0, height: 2),
-      button: TextStyle(fontSize: 16)),
+      headline1: TextStyle(fontWeight: FontWeight.bold, fontFamily: 'OpenSans'),
+      headline2: TextStyle(fontFamily: 'OpenSans'),
+      headline4: TextStyle(fontFamily: 'OpenSans'),
+      headline5: TextStyle(fontFamily: 'OpenSans'),
+      headline6: TextStyle(
+          fontWeight: FontWeight.bold,
+          color: Colors.black54,
+          fontFamily: 'Roboto'),
+      bodyText2: TextStyle(fontSize: 14.0, height: 1.4, fontFamily: 'Roboto'),
+      bodyText1: TextStyle(fontSize: 14.0, height: 2, fontFamily: 'Roboto'),
+      button: TextStyle(fontSize: 16, fontFamily: 'Roboto')),
 );
