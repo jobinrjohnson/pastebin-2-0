@@ -6,6 +6,7 @@ import 'package:pastebin/pages/privacy_policy_page.dart';
 import 'package:pastebin/pages/splash_page.dart';
 import 'package:pastebin/provider/userprovider.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'add_paste_page.dart';
 
@@ -51,30 +52,50 @@ class _UserViewPage extends State<UserViewPage> {
 
             // Account box
 
-            Material(
-              elevation: 3,
-              color: Theme.of(context).accentColor,
-              borderRadius: BorderRadius.circular(20),
-              child: Container(
-                padding: EdgeInsets.all(20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Text("Account",
-                        style: Theme.of(context)
-                            .textTheme
-                            .headline6!
-                            .copyWith(color: Colors.white)),
-                    SizedBox(height: 10),
-                    Text("See your pastebin home on website.",
-                        style: Theme.of(context)
-                            .textTheme
-                            .caption!
-                            .copyWith(color: Colors.white70)),
-                  ],
-                ),
-              ),
-            ),
+            GestureDetector(
+                onTap: () async {
+                  var _url = user?.url;
+                  await canLaunch(_url)
+                      ? await launch(_url)
+                      : throw 'Could not launch $_url';
+                },
+                child: Material(
+                  elevation: 3,
+                  color: Theme.of(context).accentColor,
+                  borderRadius: BorderRadius.circular(20),
+                  child: Container(
+                    padding: EdgeInsets.all(20),
+                    child: Row(
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(8.0),
+                          child: Image.network(
+                            user?.image,
+                            width: 50,
+                          ),
+                        ),
+                        SizedBox(width: 10),
+                        Expanded(
+                            child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            Text("Account",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headline6!
+                                    .copyWith(color: Colors.white)),
+                            SizedBox(height: 10),
+                            Text("See your pastebin home on website.",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .caption!
+                                    .copyWith(color: Colors.white70)),
+                          ],
+                        ))
+                      ],
+                    ),
+                  ),
+                )),
 
             SizedBox(height: 20),
 
@@ -124,7 +145,7 @@ class _UserViewPage extends State<UserViewPage> {
                               context,
                               MaterialPageRoute(
                                   builder: (context) => SplashPage()),
-                                  (Route<dynamic> route) => false);
+                              (Route<dynamic> route) => false);
                         },
                         child: Material(
                           elevation: 3,
@@ -138,7 +159,7 @@ class _UserViewPage extends State<UserViewPage> {
                               children: [
                                 Text("Logout",
                                     style:
-                                    Theme.of(context).textTheme.headline6),
+                                        Theme.of(context).textTheme.headline6),
                                 SizedBox(height: 10),
                                 Text("Log out from this application",
                                     style: Theme.of(context).textTheme.caption),

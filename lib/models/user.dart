@@ -5,7 +5,11 @@ class User {
   String? email;
 
   get image {
-    return avatarUrl?.replaceFirst("@", "https://pastebin.com/");
+    return "https://pastebin.com/themes/pastebin/img/guest.png"; //avatarUrl?.replaceFirst("@", "https://pastebin.com/");
+  }
+
+  get url {
+    return 'https://pastebin.com/u/${this.name}';
   }
 
   User({this.name, this.avatarUrl, this.email, this.website});

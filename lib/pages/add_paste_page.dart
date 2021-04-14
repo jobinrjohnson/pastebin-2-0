@@ -13,7 +13,7 @@ class _AddPastePage extends State<AddPastePage> {
   TextEditingController _titleController = new TextEditingController();
   TextEditingController _pasteController = new TextEditingController();
   bool isPrivate = false;
-  String dropdownValue = 'javascript';
+  String dropdownValue = 'none';
 
   bool isLoading = false;
 

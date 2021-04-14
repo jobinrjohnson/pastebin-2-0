@@ -31,8 +31,11 @@ class _MainAppBar extends State<MainAppBar> {
           User? user = provider.user;
 
           return IconButton(
-            icon: const Icon(Icons.person_outline_outlined),
-            iconSize: 30,
+            icon: ClipRRect(
+              borderRadius: BorderRadius.circular(8.0),
+              child: Image.network(user?.image),
+            ),
+            iconSize: 40,
             padding: EdgeInsets.all(20),
             tooltip: 'Show Profile',
             onPressed: () {

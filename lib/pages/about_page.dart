@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pastebin/components/app_bar/in_page_appbar.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class AboutPage extends StatelessWidget {
   @override
@@ -39,39 +40,47 @@ class AboutPage extends StatelessWidget {
             Text(
                 "Pastebin is a website where you can store any text online for easy sharing. The website is mainly used by programmers to store pieces of sources code or configuration information, but anyone is more than welcome to paste any type of text. The idea behind the site is to make it more convenient for people to share large amounts of text online."),
             SizedBox(height: 40),
-            Material(
-              elevation: 3,
-              color: Theme.of(context).primaryColor,
-              borderRadius: BorderRadius.circular(20),
-              child: Container(
-                padding: EdgeInsets.all(20),
-                child: Row(
-                  children: [
-                    Expanded(
-                        child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
+            GestureDetector(
+                onTap: () async {
+                  var _url = "https://jobinrjohnson.in/";
+                  await canLaunch(_url)
+                      ? await launch(_url)
+                      : throw 'Could not launch $_url';
+                },
+                child: Material(
+                  elevation: 3,
+                  color: Theme.of(context).primaryColor,
+                  borderRadius: BorderRadius.circular(20),
+                  child: Container(
+                    padding: EdgeInsets.all(20),
+                    child: Row(
                       children: [
-                        Text("@jobinrjohnson",
-                            style: Theme.of(context)
-                                .textTheme
-                                .headline6!
-                                .copyWith(color: Colors.white)),
-                        SizedBox(height: 10),
-                        Text("See developer information at jobinrjohnson.in",
-                            style: Theme.of(context)
-                                .textTheme
-                                .caption!
-                                .copyWith(color: Colors.white70)),
+                        Expanded(
+                            child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            Text("@jobinrjohnson",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headline6!
+                                    .copyWith(color: Colors.white)),
+                            SizedBox(height: 10),
+                            Text(
+                                "See developer information at jobinrjohnson.in",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .caption!
+                                    .copyWith(color: Colors.white70)),
+                          ],
+                        )),
+                        Icon(
+                          Icons.arrow_forward_ios_outlined,
+                          color: Colors.white70,
+                        )
                       ],
-                    )),
-                    Icon(
-                      Icons.arrow_forward_ios_outlined,
-                      color: Colors.white70,
-                    )
-                  ],
-                ),
-              ),
-            ),
+                    ),
+                  ),
+                )),
             SizedBox(height: 50),
           ],
         ));
