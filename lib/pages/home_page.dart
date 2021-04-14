@@ -68,7 +68,7 @@ class _MyHomePageState extends State<MyHomePage> {
       delegate: SliverChildBuilderDelegate(
         (context, index) {
           if (index == snapshot.data.length) {
-            return SizedBox(height: 250);
+            return SizedBox(height: 100);
           }
 
           PastebinPaste paste = snapshot.data![index];
