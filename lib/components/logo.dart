@@ -20,10 +20,14 @@ class Logo extends StatelessWidget {
             )),
         margin: margin,
         padding: EdgeInsets.all(8),
-        child: Text("pb",
-            style: Theme.of(context).textTheme.headline6!.copyWith(
-                fontSize: 28,
-                fontStyle: FontStyle.italic,
-                color: Colors.white)));
+        child: SizedBox(
+          child: Text("pb",
+              style: Theme.of(context).textTheme.headline6!.copyWith(
+                  fontSize: 24,
+                  fontStyle: FontStyle.italic,
+                  color: Colors.white)),
+          width: 24,
+          height: 24,
+        ));
   }
 }
