@@ -79,11 +79,7 @@ class _AddPastePage extends State<AddPastePage> {
         children: [
           Text(
             "Create Paste.",
-            style: Theme.of(context)
-                .textTheme
-                .headline4!
-                .copyWith(color: Colors.black),
-          ),
+            style: Theme.of(context).textTheme.headline4),
           SizedBox(height: 10),
           Text(
             "Add a new pastebin paste to your account.",

@@ -25,10 +25,8 @@ class PasteStyle1 extends StatelessWidget {
           contentPadding: EdgeInsets.symmetric(vertical: 15, horizontal: 25),
           title: Text(
             paste.title.toString(),
-            style: Theme.of(context)
-                .textTheme
-                .headline6!
-                .copyWith(color: Colors.black87, fontSize: 20),
+            style:
+                Theme.of(context).textTheme.headline6!.copyWith(fontSize: 20),
           ),
           subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

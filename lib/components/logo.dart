@@ -26,8 +26,8 @@ class Logo extends StatelessWidget {
                   fontSize: 24,
                   fontStyle: FontStyle.italic,
                   color: Colors.white)),
-          width: 24,
-          height: 24,
+          width: 32,
+          height: 32,
         ));
   }
 }

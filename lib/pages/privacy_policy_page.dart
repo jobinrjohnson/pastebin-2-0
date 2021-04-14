@@ -20,10 +20,7 @@ class PrivacyPolicyPage extends StatelessWidget {
           children: [
             Text(
               "Privacy Policy",
-              style: Theme.of(context)
-                  .textTheme
-                  .headline4!
-                  .copyWith(color: Colors.black),
+              style: Theme.of(context).textTheme.headline4,
             ),
             SizedBox(height: 20),
             Text(

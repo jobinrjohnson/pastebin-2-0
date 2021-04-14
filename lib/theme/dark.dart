@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-var lightTheme = ThemeData(
+var darkTheme = ThemeData(
   // Define the default brightness and colors.
-  brightness: Brightness.light,
+  brightness: Brightness.dark,
   // primaryColor: Colors.lightBlue[800],
   // accentColor: Colors.cyan[600],
 
@@ -13,29 +13,29 @@ var lightTheme = ThemeData(
     contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 25),
     hintStyle: TextStyle(fontFamily: 'OpenSans'),
     border: OutlineInputBorder(
-        borderSide: BorderSide(color: Colors.black87, width: 2.0),
+        borderSide: BorderSide(color: Colors.white70, width: 2.0),
         borderRadius: BorderRadius.circular(15)),
     focusedBorder: OutlineInputBorder(
-        borderSide: BorderSide(color: Colors.black, width: 2.0),
+        borderSide: BorderSide(color: Colors.white, width: 2.0),
         borderRadius: BorderRadius.circular(15)),
     enabledBorder: OutlineInputBorder(
-        borderSide: BorderSide(color: Colors.black87, width: 2.0),
+        borderSide: BorderSide(color: Colors.white70, width: 2.0),
         borderRadius: BorderRadius.circular(15)),
   ),
 
   textButtonTheme: TextButtonThemeData(
       style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all<Color>(Colors.black87),
-          foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+          backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
+          foregroundColor: MaterialStateProperty.all<Color>(Colors.black),
           padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
               EdgeInsets.symmetric(vertical: 25, horizontal: 40)),
           shape: MaterialStateProperty.all<OutlinedBorder>(
               RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(20)))))),
 
-  backgroundColor: Color.fromRGBO(243, 243, 244, 1),
-  // scaffoldBackgroundColor: Color.fromRGBO(243, 243, 244, 1),
-  scaffoldBackgroundColor: Colors.white,
+  // backgroundColor: Color.fromRGBO(243, 243, 244, 1),
+  // // scaffoldBackgroundColor: Color.fromRGBO(243, 243, 244, 1),
+  // scaffoldBackgroundColor: Colors.white,
 
   appBarTheme: AppBarTheme(
       backgroundColor: Color.fromRGBO(243, 243, 244, 1),
@@ -51,11 +51,11 @@ var lightTheme = ThemeData(
   textTheme: TextTheme(
       headline1: TextStyle(fontWeight: FontWeight.bold, fontFamily: 'OpenSans'),
       headline2: TextStyle(fontFamily: 'OpenSans'),
-      headline4: TextStyle(fontFamily: 'OpenSans', color: Colors.black),
+      headline4: TextStyle(fontFamily: 'OpenSans', color: Colors.white),
       headline5: TextStyle(fontFamily: 'OpenSans'),
       headline6: TextStyle(
           fontWeight: FontWeight.bold,
-          color: Colors.black87,
+          color: Colors.white,
           fontFamily: 'Roboto'),
       bodyText2: TextStyle(fontSize: 14.0, height: 1.4, fontFamily: 'Roboto'),
       bodyText1: TextStyle(fontSize: 14.0, height: 2, fontFamily: 'Roboto'),

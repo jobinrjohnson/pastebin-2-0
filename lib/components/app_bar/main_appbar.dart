@@ -36,11 +36,7 @@ class _MainAppBar extends State<MainAppBar> {
                   SizedBox(height: 20),
                   Text(
                     '${user?.name ?? 'user'}',
-                    style: Theme.of(context)
-                        .textTheme
-                        .headline4!
-                        .copyWith(color: Colors.black),
-                  )
+                    style: Theme.of(context).textTheme.headline4)
                 ],
               ));
         })

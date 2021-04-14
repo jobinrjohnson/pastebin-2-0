@@ -4,6 +4,7 @@ import 'package:pastebin/models/user.dart';
 import 'package:pastebin/pages/about_page.dart';
 import 'package:pastebin/pages/privacy_policy_page.dart';
 import 'package:pastebin/pages/splash_page.dart';
+import 'package:pastebin/provider/theme_provider.dart';
 import 'package:pastebin/provider/userprovider.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -40,10 +41,7 @@ class _UserViewPage extends State<UserViewPage> {
             SizedBox(height: 20),
             Text(
               '${user?.name} ',
-              style: Theme.of(context)
-                  .textTheme
-                  .headline4!
-                  .copyWith(color: Colors.black),
+              style: Theme.of(context).textTheme.headline4,
             ),
             SizedBox(height: 3),
             Text('${user?.email ?? ' '} ${user?.website ?? ' '}',
@@ -173,6 +171,24 @@ class _UserViewPage extends State<UserViewPage> {
             // Our apps
 
             SizedBox(height: 40),
+            Consumer<ThemeProvider>(
+              builder: (context, ThemeProvider themeProvider, child) {
+                return ListTile(
+                  onTap: () {
+                    themeProvider.setTheme(themeProvider.themeId == 0 ? 1 : 0);
+                  },
+                  title: Text(
+                      'Switch to ${themeProvider.themeId == 0 ? 'dark' : 'light'} mode'),
+                  subtitle: Text("Change the application theme."),
+                  trailing: Icon(Icons.circle,
+                      color: themeProvider.themeId == 0
+                          ? Colors.black
+                          : Colors.white),
+                );
+              },
+            ),
+
+            SizedBox(height: 5),
 
             ListTile(
               onTap: () {

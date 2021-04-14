@@ -23,11 +23,7 @@ class AboutPage extends StatelessWidget {
             SizedBox(height: 20),
             Text(
               "This Application",
-              style: Theme.of(context)
-                  .textTheme
-                  .headline4!
-                  .copyWith(color: Colors.black),
-            ),
+              style: Theme.of(context).textTheme.headline4),
             SizedBox(height: 20),
             Text(
                 "This is an Un official app for pastebin by an independent developer. This uses Official Pastebin APIs to fetch and update data to/from pastebin"),
