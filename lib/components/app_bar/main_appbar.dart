@@ -18,13 +18,48 @@ class _MainAppBar extends State<MainAppBar> {
     return Hero(tag: "mainIcon_1", child: Logo(margin: EdgeInsets.all(22)));
   }
 
+  Widget buildFlexibleSpace() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        Consumer<UserProvider>(
+            builder: (context, UserProvider provider, child) {
+          User? user = provider.user;
+
+          return Container(
+              padding: EdgeInsets.symmetric(vertical: 40, horizontal: 40),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  SizedBox(height: widget.preferredSize.height),
+                  Text("Welcome", style: Theme.of(context).textTheme.headline4),
+                  SizedBox(height: 20),
+                  Text(
+                    '${user?.name ?? 'user'}',
+                    style: Theme.of(context)
+                        .textTheme
+                        .headline4!
+                        .copyWith(color: Colors.black),
+                  )
+                ],
+              ));
+        })
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return AppBar(
+    return SliverAppBar(
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       leading: this.buildLeading(),
       leadingWidth: 95,
-      backgroundColor: Colors.transparent,
       toolbarHeight: widget.preferredSize.height,
+      pinned: true,
+      expandedHeight: 300.0,
+      flexibleSpace: FlexibleSpaceBar(
+        background: this.buildFlexibleSpace(),
+      ),
       actions: [
         Consumer<UserProvider>(
             builder: (context, UserProvider provider, child) {
