@@ -5,7 +5,9 @@ class User {
   String? email;
 
   get image {
-    return "https://pastebin.com/themes/pastebin/img/guest.png"; //avatarUrl?.replaceFirst("@", "https://pastebin.com/");
+    if (avatarUrl == null || avatarUrl!.startsWith("@"))
+      return "https://pastebin.com/themes/pastebin/img/guest.png";
+    return 'https://pastebin.com/$avatarUrl';
   }
 
   get url {
