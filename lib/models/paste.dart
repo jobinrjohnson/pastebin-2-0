@@ -13,10 +13,10 @@ class PastebinPaste {
 
   get date {
     if (pasteDate == null) {
-      return "";
+      return DateFormat.yMMMd().format(DateTime.now());
     }
     var date =
-        new DateTime.fromMicrosecondsSinceEpoch(int.tryParse(pasteDate!)!);
+        new DateTime.fromMillisecondsSinceEpoch(int.parse(pasteDate!) * 1000);
     return DateFormat.yMMMd().format(date);
   }
 
