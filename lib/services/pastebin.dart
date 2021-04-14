@@ -35,6 +35,35 @@ class PastebinService {
     throw ("Some error occurred");
   }
 
+  Future<String> create(
+      {String? title,
+      String? paste,
+      String? type,
+      bool isPrivate = false}) async {
+    var body = {
+      'api_dev_key': this.apiKey,
+      'api_option': 'paste',
+      'api_paste_code': paste,
+      'api_paste_name': title,
+      'api_paste_private': '${isPrivate ? 1 : 0}',
+    };
+
+    if (type != 'none') {
+      body['api_paste_format'] = type;
+    }
+
+    var response =
+        await http.post(this.getUrl(trailing: '/api_post.php'), body: body);
+
+    print(response.body);
+
+    if (response.statusCode == 200) {
+      return response.body;
+    }
+
+    throw (response.body);
+  }
+
   getRawPost(String postId) async {
     var response =
         await http.get(Uri.parse('https://pastebin.com/raw/' + postId));

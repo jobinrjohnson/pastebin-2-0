@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pastebin/components/app_bar/in_page_appbar.dart';
 import 'package:pastebin/constants/pastebin_types.dart';
+import 'package:pastebin/services/pastebin.dart';
 
 class AddPastePage extends StatefulWidget {
   @override
@@ -9,20 +10,46 @@ class AddPastePage extends StatefulWidget {
 }
 
 class _AddPastePage extends State<AddPastePage> {
+  TextEditingController _titleController = new TextEditingController();
+  TextEditingController _pasteController = new TextEditingController();
+  bool isPrivate = false;
+  String dropdownValue = 'javascript';
+
+  bool isLoading = false;
+
+  _savePost() {
+    setState(() {
+      isLoading = true;
+    });
+
+    PastebinService()
+        .create(
+            title: _titleController.text,
+            paste: _pasteController.text,
+            type: dropdownValue,
+            isPrivate: isPrivate)
+        .then((value) {})
+        .onError((error, stackTrace) {
+      final snackBar = SnackBar(content: Text('${error.toString()} '));
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    }).whenComplete(() {
+      setState(() {
+        isLoading = false;
+      });
+    });
+  }
+
   buildBottomNavigBar() {
     return Container(
         color: Colors.transparent,
         padding: EdgeInsets.only(bottom: 30, left: 40, right: 40, top: 2),
         child: TextButton(
-            onPressed: () {},
+            onPressed: _savePost,
             child: Padding(
               child: Text("Create Paste"),
               padding: EdgeInsets.symmetric(vertical: 5),
             )));
   }
-
-  bool isPrivate = false;
-  String dropdownValue = 'javascript';
 
   Widget buildForm() {
     return Container(
@@ -44,9 +71,13 @@ class _AddPastePage extends State<AddPastePage> {
                 Theme.of(context).textTheme.headline4!.copyWith(fontSize: 16),
           ),
           SizedBox(height: 40),
-          TextFormField(decoration: InputDecoration(hintText: "Title")),
+          TextFormField(
+            decoration: InputDecoration(hintText: "Title"),
+            controller: _titleController,
+          ),
           SizedBox(height: 20),
           TextFormField(
+            controller: _pasteController,
             minLines: 10,
             maxLines: 20000,
             decoration: InputDecoration(hintText: "Paste"),

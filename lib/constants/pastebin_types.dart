@@ -1,4 +1,5 @@
 var pastebinTypes = {
+  "none": "None",
   "javascript": "JavaScript",
   "asm": "ASM (NASM)",
   "c": "C",
