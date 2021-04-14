@@ -23,7 +23,7 @@ class PasteStyle2 extends StatelessWidget {
         IconButton(
             icon: Icon(Icons.delete),
             onPressed: () {
-              new PastebinService().deletePaste(paste?.key ?? '').then((value) {
+              new PastebinService().deletePaste(paste.key ?? '').then((value) {
                 Navigator.of(context).pop();
               }).onError((error, stackTrace) {
                 final snackBar =

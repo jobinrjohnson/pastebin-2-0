@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pastebin/components/app_bar/in_page_appbar.dart';
 import 'package:pastebin/constants/pastebin_types.dart';
+import 'package:pastebin/models/paste.dart';
+import 'package:pastebin/pages/paste_added.dart';
 import 'package:pastebin/services/pastebin.dart';
 
 class AddPastePage extends StatefulWidget {
@@ -22,14 +24,25 @@ class _AddPastePage extends State<AddPastePage> {
       isLoading = true;
     });
 
+    PastebinPaste p = new PastebinPaste(
+        title: _titleController.text,
+        format: dropdownValue,
+        hits: 0,
+        size: _pasteController.text.length.toString(),
+        isPrivate: isPrivate);
+
     PastebinService()
         .create(
             title: _titleController.text,
             paste: _pasteController.text,
             type: dropdownValue,
             isPrivate: isPrivate)
-        .then((value) {})
-        .onError((error, stackTrace) {
+        .then((value) {
+      p.url = value;
+      p.key = value.replaceAll("https://pastebin.com/", "").trim();
+      Navigator.pushReplacement(context,
+          MaterialPageRoute(builder: (context) => PasteAddedPage(paste: p)));
+    }).onError((error, stackTrace) {
       final snackBar = SnackBar(content: Text('${error.toString()} '));
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
     }).whenComplete(() {

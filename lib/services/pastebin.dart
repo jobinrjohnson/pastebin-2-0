@@ -45,6 +45,7 @@ class PastebinService {
       'api_option': 'paste',
       'api_paste_code': paste,
       'api_paste_name': title,
+      'api_user_key': authString,
       'api_paste_private': '${isPrivate ? 1 : 0}',
     };
 
