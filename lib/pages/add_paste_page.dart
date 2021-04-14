@@ -4,7 +4,9 @@ import 'package:pastebin/components/app_bar/in_page_appbar.dart';
 import 'package:pastebin/constants/pastebin_types.dart';
 import 'package:pastebin/models/paste.dart';
 import 'package:pastebin/pages/paste_added.dart';
+import 'package:pastebin/provider/paste_provider.dart';
 import 'package:pastebin/services/pastebin.dart';
+import 'package:provider/provider.dart';
 
 class AddPastePage extends StatefulWidget {
   @override
@@ -20,6 +22,10 @@ class _AddPastePage extends State<AddPastePage> {
   bool isLoading = false;
 
   _savePost() {
+    if (isLoading) {
+      return;
+    }
+
     setState(() {
       isLoading = true;
     });
@@ -33,11 +39,12 @@ class _AddPastePage extends State<AddPastePage> {
 
     PastebinService()
         .create(
-            title: _titleController.text,
-            paste: _pasteController.text,
-            type: dropdownValue,
-            isPrivate: isPrivate)
+        title: _titleController.text,
+        paste: _pasteController.text,
+        type: dropdownValue,
+        isPrivate: isPrivate)
         .then((value) {
+      Provider.of<PasteProvider>(context, listen: false).updatePastesChanged();
       p.url = value;
       p.key = value.replaceAll("https://pastebin.com/", "").trim();
       Navigator.pushReplacement(context,

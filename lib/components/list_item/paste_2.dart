@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pastebin/models/paste.dart';
+import 'package:pastebin/provider/paste_provider.dart';
 import 'package:pastebin/services/pastebin.dart';
+import 'package:provider/provider.dart';
 import 'package:share/share.dart';
 
 class PasteStyle2 extends StatelessWidget {
@@ -24,6 +26,8 @@ class PasteStyle2 extends StatelessWidget {
             icon: Icon(Icons.delete),
             onPressed: () {
               new PastebinService().deletePaste(paste.key ?? '').then((value) {
+                Provider.of<PasteProvider>(context, listen: false)
+                    .updatePastesChanged();
                 Navigator.of(context).pop();
               }).onError((error, stackTrace) {
                 final snackBar =
@@ -59,6 +63,7 @@ class PasteStyle2 extends StatelessWidget {
             children: [
               Text(
                 paste.title.toString(),
+                textAlign: TextAlign.center,
                 style: Theme.of(context)
                     .textTheme
                     .headline6!

@@ -3,7 +3,9 @@ import 'package:pastebin/components/app_bar/main_appbar.dart';
 import 'package:pastebin/components/list_item/paste_1.dart';
 import 'package:pastebin/models/paste.dart';
 import 'package:pastebin/pages/add_paste_page.dart';
+import 'package:pastebin/provider/paste_provider.dart';
 import 'package:pastebin/services/pastebin.dart';
+import 'package:provider/provider.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key? key, this.title}) : super(key: key);
@@ -22,6 +24,19 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    var body = Consumer<PasteProvider>(
+        builder: (context, value, child) => FutureBuilder(
+            future: new PastebinService().getMyPastes(),
+            builder: (context, snapshot) {
+              return CustomScrollView(
+                slivers: <Widget>[
+                  MainAppBar(),
+                  if (!snapshot.hasData) buildSkleton(),
+                  if (snapshot.hasData) buildListView(snapshot),
+                ],
+              );
+            }));
+
     return Scaffold(
         floatingActionButton: FloatingActionButton(
           onPressed: () {
@@ -33,17 +48,7 @@ class _MyHomePageState extends State<MyHomePage> {
           tooltip: 'Increment',
           child: Icon(Icons.add),
         ),
-        body: FutureBuilder(
-            future: new PastebinService().getMyPastes(),
-            builder: (context, snapshot) {
-              return CustomScrollView(
-                slivers: <Widget>[
-                  MainAppBar(),
-                  if (!snapshot.hasData) buildSkleton(),
-                  if (snapshot.hasData) buildListView(snapshot),
-                ],
-              );
-            }));
+        body: body);
   }
 
   Widget buildSkleton() {

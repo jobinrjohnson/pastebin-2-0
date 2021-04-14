@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pastebin/pages/splash_page.dart';
+import 'package:pastebin/provider/paste_provider.dart';
 import 'package:pastebin/provider/userprovider.dart';
 import 'package:pastebin/theme/light.dart';
 import 'package:provider/provider.dart';
@@ -14,6 +15,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<UserProvider>(create: (_) => UserProvider()),
+        ChangeNotifierProvider<PasteProvider>(create: (_) => PasteProvider()),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
