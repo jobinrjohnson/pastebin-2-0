@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 
 class InPageAppBar extends StatefulWidget implements PreferredSizeWidget {
+  final bool requireSliver;
+
+  const InPageAppBar({Key? key, this.requireSliver = false}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() => _MainAppBar();
 
@@ -28,6 +32,21 @@ class _MainAppBar extends State<InPageAppBar> {
 
   @override
   Widget build(BuildContext context) {
+    if (this.widget.requireSliver) {
+      return SliverAppBar(
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        leading: InkWell(
+          child: this.buildLeading(),
+          onTap: () {
+            Navigator.pop(context);
+          },
+        ),
+        leadingWidth: 95,
+        toolbarHeight: widget.preferredSize.height,
+        pinned: true,
+      );
+    }
+
     return AppBar(
         leading: InkWell(
           child: this.buildLeading(),

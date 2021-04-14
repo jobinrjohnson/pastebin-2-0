@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_syntax_view/flutter_syntax_view.dart';
+import 'package:pastebin/components/app_bar/in_page_appbar.dart';
+import 'package:pastebin/components/list_item/paste_2.dart';
 import 'package:pastebin/models/paste.dart';
 import 'package:pastebin/services/pastebin.dart';
 
@@ -15,28 +17,20 @@ class PasteViewPage extends StatefulWidget {
 class _PasteView extends State<PasteViewPage> {
   Widget build(BuildContext context) {
     return Scaffold(
-        body: NestedScrollView(headerSliverBuilder:
-            (BuildContext context, bool innerBoxIsScrolled) {
-      return <Widget>[
-        SliverOverlapAbsorber(
-          handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
-          sliver: SliverAppBar(
-            shape: ContinuousRectangleBorder(
-                borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(100),
-                    bottomLeft: Radius.circular(100))),
-            backgroundColor: Theme.of(context).accentColor,
-            flexibleSpace: this.buildFlexibleSpace(context),
-            floating: true,
-            snap: true,
-            expandedHeight: 300.0,
-            forceElevated: innerBoxIsScrolled,
-          ),
-        )
-      ];
-    }, body: Builder(builder: (BuildContext context) {
-      return this.buildSyntaxHiliter();
-    })));
+        body: CustomScrollView(
+      slivers: [
+        InPageAppBar(requireSliver: true),
+        SliverToBoxAdapter(
+            child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                child: PasteStyle2(paste: this.widget.paste))),
+        SliverFillRemaining(
+            child: Container(
+          child: this.buildSyntaxHiliter(),
+          padding: EdgeInsets.only(left: 20),
+        ))
+      ],
+    ));
   }
 
   buildSyntaxHiliter() {

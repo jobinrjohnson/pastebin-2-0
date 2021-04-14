@@ -145,4 +145,22 @@ class PastebinService {
 
     return p;
   }
+
+  Future<String> deletePaste(String pasteId) async {
+    var response =
+        await http.post(this.getUrl(trailing: '/api_post.php'), body: {
+      'api_dev_key': this.apiKey,
+      'api_option': 'delete',
+      'api_user_key': authString,
+      'api_paste_key': pasteId
+    });
+
+    print(response.body);
+
+    if (response.statusCode != 200) {
+      throw (response.body);
+    }
+
+    return response.body;
+  }
 }
