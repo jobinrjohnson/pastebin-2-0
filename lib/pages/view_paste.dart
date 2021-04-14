@@ -24,11 +24,18 @@ class _PasteView extends State<PasteViewPage> {
             child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                 child: PasteStyle2(paste: this.widget.paste))),
-        SliverFillRemaining(
-            child: Container(
-          child: this.buildSyntaxHiliter(),
-          padding: EdgeInsets.only(left: 20),
-        ))
+        if (widget.paste.format == "text" || widget.paste.format == "none")
+          SliverToBoxAdapter(
+              child: Container(
+            child: this.buildSyntaxHiliter(),
+            padding: EdgeInsets.only(left: 20),
+          ))
+        else
+          SliverFillRemaining(
+              child: Container(
+            child: this.buildSyntaxHiliter(),
+            padding: EdgeInsets.only(left: 20),
+          ))
       ],
     ));
   }
@@ -50,6 +57,14 @@ class _PasteView extends State<PasteViewPage> {
                 child: CircularProgressIndicator(),
               ),
             );
+          }
+
+          if (widget.paste.format == "text" || widget.paste.format == "none") {
+            return SingleChildScrollView(
+                child: Container(
+                    padding: EdgeInsets.only(
+                        right: 25, left: 10, top: 20, bottom: 30),
+                    child: Text(snapshot.data?.toString() ?? '')));
           }
 
           return SyntaxView(
