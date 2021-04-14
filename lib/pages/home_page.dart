@@ -42,6 +42,42 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  buildUserInfo() {
+    return Consumer<UserProvider>(
+        builder: (context, UserProvider provider, child) {
+      User? user = provider.user;
+
+      return Container(
+          padding: EdgeInsets.symmetric(vertical: 40, horizontal: 20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text("Welcome", style: Theme.of(context).textTheme.headline4),
+              SizedBox(height: 20),
+              Text(
+                '${user?.name ?? 'user'}',
+                style: Theme.of(context)
+                    .textTheme
+                    .headline4!
+                    .copyWith(color: Colors.black),
+              )
+            ],
+          ));
+    });
+  }
+
+  buildSkleton() {
+    var skelItem = Container(
+        margin: EdgeInsets.all(10),
+        child: Material(
+          borderRadius: BorderRadius.circular(20),
+          color: Theme.of(context).backgroundColor,
+          child: ListTile(title: SizedBox(height: 120)),
+        ));
+
+    return Column(children: [skelItem, skelItem, skelItem, skelItem]);
+  }
+
   Widget buildListView() {
     return FutureBuilder(
       future: new PastebinService().getMyPastes(),
@@ -54,10 +90,6 @@ class _MyHomePageState extends State<MyHomePage> {
           ));
         }
 
-        if (!snapshot.hasData) {
-          return Center(child: Text("No Data"));
-        }
-
         return ListView.builder(
           itemCount: (snapshot.data?.length ?? 0) + 2,
           padding: EdgeInsets.symmetric(horizontal: 15),
@@ -67,28 +99,12 @@ class _MyHomePageState extends State<MyHomePage> {
             }
 
             if (index == 0) {
-              return Consumer<UserProvider>(
-                  builder: (context, UserProvider provider, child) {
-                User? user = provider.user;
-
-                return Container(
-                    padding: EdgeInsets.symmetric(vertical: 40, horizontal: 20),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        Text("Welcome",
-                            style: Theme.of(context).textTheme.headline4),
-                        SizedBox(height: 20),
-                        Text(
-                          '${user?.name ?? 'user'}',
-                          style: Theme.of(context)
-                              .textTheme
-                              .headline4!
-                              .copyWith(color: Colors.black),
-                        )
-                      ],
-                    ));
-              });
+              return Column(
+                children: [
+                  this.buildUserInfo(),
+                  if (!snapshot.hasData) this.buildSkleton()
+                ],
+              );
             }
 
             PastebinPaste paste = snapshot.data![index - 1];
