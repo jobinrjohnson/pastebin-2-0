@@ -1,3 +1,4 @@
+import 'package:clipboard/clipboard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_syntax_view/flutter_syntax_view.dart';
 import 'package:pastebin/components/app_bar/in_page_appbar.dart';
@@ -15,7 +16,16 @@ class PasteViewPage extends StatefulWidget {
 }
 
 class _PasteView extends State<PasteViewPage> {
+  String copyText = "";
+
   Widget build(BuildContext context) {
+    copyToClipBoard() {
+      FlutterClipboard.copy(copyText).then((value) {
+        final snackBar = SnackBar(content: Text('Copied'));
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      });
+    }
+
     return Scaffold(
         body: CustomScrollView(
       slivers: [
@@ -23,7 +33,10 @@ class _PasteView extends State<PasteViewPage> {
         SliverToBoxAdapter(
             child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-                child: PasteStyle2(paste: this.widget.paste))),
+                child: PasteStyle2(
+                  paste: this.widget.paste,
+                  copyToClipBoard: copyToClipBoard,
+                ))),
         if (widget.paste.format == "text" || widget.paste.format == "none")
           SliverToBoxAdapter(
               child: Container(
@@ -35,9 +48,9 @@ class _PasteView extends State<PasteViewPage> {
               child: Container(
             child: this.buildSyntaxHiliter(),
             padding: EdgeInsets.only(left: 20),
-          ))
-      ],
-    ));
+                  ))
+          ],
+        ));
   }
 
   buildSyntaxHiliter() {
@@ -67,8 +80,10 @@ class _PasteView extends State<PasteViewPage> {
                     child: Text(snapshot.data?.toString() ?? '')));
           }
 
+          copyText = snapshot.data?.toString() ?? '';
+
           return SyntaxView(
-            code: snapshot.data?.toString() ?? '',
+            code: copyText,
             syntax: Syntax.YAML,
             syntaxTheme: Theme.of(context).brightness == Brightness.light
                 ? SyntaxTheme.vscodeLight()

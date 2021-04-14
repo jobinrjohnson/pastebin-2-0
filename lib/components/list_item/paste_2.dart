@@ -7,13 +7,22 @@ import 'package:share/share.dart';
 
 class PasteStyle2 extends StatelessWidget {
   final PastebinPaste paste;
+  final Function()? copyToClipBoard;
 
-  const PasteStyle2({Key? key, required this.paste}) : super(key: key);
+  const PasteStyle2({Key? key, required this.paste, this.copyToClipBoard})
+      : super(key: key);
 
   buildActions(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
+        if (this.copyToClipBoard != null)
+          IconButton(
+              icon: Icon(Icons.copy),
+              onPressed: this.copyToClipBoard,
+              iconSize: 30,
+              color: Colors.white),
+        if (this.copyToClipBoard != null) SizedBox(width: 30),
         IconButton(
             icon: Icon(Icons.share),
             onPressed: () {
