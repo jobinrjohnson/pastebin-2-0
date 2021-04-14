@@ -118,7 +118,7 @@ class PastebinService {
       pastes.add(p);
     });
 
-    return pastes;
+    return pastes.reversed.toList();
   }
 
   Future<User> getUser(String authString) async {

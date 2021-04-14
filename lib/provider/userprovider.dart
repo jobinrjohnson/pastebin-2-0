@@ -30,16 +30,21 @@ class UserProvider with ChangeNotifier {
       this.user = User.fromMap(jsonDecode(user));
     }
     notifyListeners();
+    this.setupRemoteUser();
+  }
+
+  setupRemoteUser() {
+    PastebinService().getUser(this.authString!).then((value) {
+      this.user = value;
+      prefs.setString("user", jsonEncode(user?.toMap()));
+      notifyListeners();
+    }).onError((error, stackTrace) {});
   }
 
   login(String authString) async {
     this.authString = authString;
     await prefs.setString("authString", authString);
-    PastebinService().getUser(authString).then((value) {
-      this.user = value;
-      prefs.setString("user", jsonEncode(user?.toMap()));
-      notifyListeners();
-    });
+    this.setupRemoteUser();
     notifyListeners();
   }
 
