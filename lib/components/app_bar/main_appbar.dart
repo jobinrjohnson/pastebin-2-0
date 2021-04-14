@@ -68,7 +68,8 @@ class _MainAppBar extends State<MainAppBar> {
           return IconButton(
             icon: ClipRRect(
               borderRadius: BorderRadius.circular(8.0),
-              child: Image.network(user?.image),
+              child: Image.network(user?.image ??
+                  'https://pastebin.com/themes/pastebin/img/guest.png'),
             ),
             iconSize: 40,
             padding: EdgeInsets.all(20),
