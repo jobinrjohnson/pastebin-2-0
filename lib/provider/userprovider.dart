@@ -28,9 +28,9 @@ class UserProvider with ChangeNotifier {
     String? user = prefs.getString("user") ?? null;
     if (user != null) {
       this.user = User.fromMap(jsonDecode(user));
+      this.setupRemoteUser();
     }
     notifyListeners();
-    this.setupRemoteUser();
   }
 
   setupRemoteUser() {
